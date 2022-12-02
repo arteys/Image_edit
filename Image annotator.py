@@ -10,23 +10,38 @@ from PIL import Image
 location_image_1 = "C:\\Users\\Modern\\Desktop\\Python\\Image test\\Test 1.png"
 location_image_2 = "C:\\Users\\Modern\\Desktop\\Python\\Image test\\Test 2.png"
 
-img_1 = cv2.imread(location_image_1)
-img_2 = cv2.imread(location_image_2)
+# img_1 = cv2.imread(location_image_1)
+# img_2 = cv2.imread(location_image_2)
+
+# list_im = [location_image_1,location_image_2]
+# imgs    = [Image.open(i) for i in list_im ]
+
+empty_line = np.zeros([512,20,3])
+color_line = np.full_like(empty_line, [255,255,255]).astype(np.uint8)
 
 list_im = [location_image_1,location_image_2]
-imgs    = [Image.open(i) for i in list_im ]
+imgs = [Image.open(i) for i in list_im ]
+imgs_np = [np.array(i) for i in imgs]
 
-black_line = np.zeros([512,20,3])
 
-min_shape = sorted( [(np.sum(i.size), i.size ) for i in imgs])[0][1]
+# min_shape = sorted([(np.sum(i.size), i.size ) for i in imgs])[0][1]
 # imgs_comb = np.hstack([i.resize(min_shape) for i in imgs])
 
-# imgs_comb = np.hstack([[imgs[0]],[black_line],[imgs[1]]])
+imgs_np_comb = np.concatenate([imgs_np[0],color_line,imgs_np[1]], axis = 1)
 
-# imgs_comb = Image.fromarray(imgs_comb)
-# imgs_comb.show()
+# print(np.shape(imgs_np_comb))
+# print(np.dtype(empty_line))
+# print(imgs_np)
+
+imgs_comb = Image.fromarray(imgs_np_comb,'RGB')
+imgs_comb.show()  
+
+# cv2.imshow('image', imgs_np_comb)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
 
 
+# 
 # d_y,d_x,d_z = img_1.shape
 # print(d_x,d_y,d_z)
 
