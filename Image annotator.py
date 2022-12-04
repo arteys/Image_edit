@@ -27,7 +27,7 @@ imgs_np = [np.array(i) for i in imgs]
 # min_shape = sorted([(np.sum(i.size), i.size ) for i in imgs])[0][1]
 # imgs_comb = np.hstack([i.resize(min_shape) for i in imgs])
 
-imgs_np_comb = np.concatenate([imgs_np[0],color_line,imgs_np[1]], axis = 1)
+imgs_np_comb = np.concatenate([imgs_np[0],color_line,imgs_np[1],color_line], axis = 1)
 
 # print(np.shape(imgs_np_comb))
 # print(np.dtype(empty_line))
