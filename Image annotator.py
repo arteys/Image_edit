@@ -3,36 +3,53 @@ import numpy as np
 from matplotlib import pyplot as plt
 import PIL
 from PIL import Image
+import tkinter as tk
+import tkinter.filedialog as fd
+import matplotlib
+import skimage.io
+import skimage.util
 
 
 
 
 location_image_1 = "C:\\Users\\Modern\\Desktop\\Python\\Image test\\Test 1.png"
 location_image_2 = "C:\\Users\\Modern\\Desktop\\Python\\Image test\\Test 2.png"
+location_image_3 = "C:\\Users\\Modern\\Desktop\\Python\\Image test\\Test 2.png"
 
-# img_1 = cv2.imread(location_image_1)
-# img_2 = cv2.imread(location_image_2)
+root = tk.Tk()
+# paths = fd.askopenfilenames(parent=root, title='Open images')
+paths = ['C:/Users/Modern/Desktop/Python/Image test/Test 1.png', 'C:/Users/Modern/Desktop/Python/Image test/Test 2.png', 'C:/Users/Modern/Desktop/Python/Image test/Test 3.png']
 
-# list_im = [location_image_1,location_image_2]
-# imgs    = [Image.open(i) for i in list_im ]
 
-empty_line = np.zeros([512,20,3])
+
+image_first = Image.open(paths[0])
+x,y,z = np.shape(image_first)
+
+empty_line = np.zeros([x,20,3])
 color_line = np.full_like(empty_line, [255,255,255]).astype(np.uint8)
 
-list_im = [location_image_1,location_image_2]
-imgs = [Image.open(i) for i in list_im ]
-imgs_np = [np.array(i) for i in imgs]
+# image_montage_np = np.empty([x,y,z])
+# image_montage_np = []
+
+# for p in paths:
+#     image_np = Image.open(p)
+#     # image_montage_np.append(image_np)
+#     # image_montage_np.append(color_line)
+#     image_montage_np = np.append(image_montage_np,image_np)
 
 
-# min_shape = sorted([(np.sum(i.size), i.size ) for i in imgs])[0][1]
-# imgs_comb = np.hstack([i.resize(min_shape) for i in imgs])
+montage = np.empty([x,1,z]).astype(np.uint8)
 
-imgs_np_comb = np.concatenate([imgs_np[0],color_line,imgs_np[1],color_line], axis = 1)
 
-# print(np.shape(imgs_np_comb))
-# print(np.dtype(empty_line))
-# print(imgs_np)
+imgs = [skimage.io.imread(i) for i in paths]
 
-imgs_comb = Image.fromarray(imgs_np_comb,'RGB')
-imgs_comb.show()  
+for p in paths:
+    img = cv2.imread(p)
+    montage = np.concatenate([montage,color_line,img],axis = 1)
+    
+print(np.shape(montage))
+
+
+cv2.imshow('image',montage)
+cv2.waitKey(0)
 
