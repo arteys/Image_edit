@@ -25,30 +25,29 @@ paths = ['C:/Users/Modern/Desktop/Python/Image test/Test 1.png', 'C:/Users/Moder
 image_first = Image.open(paths[0])
 x,y,z = np.shape(image_first)
 
-empty_line = np.zeros([x,20,3])
+empty_line = np.zeros([x,10,3])
 color_line = np.full_like(empty_line, [255,255,255]).astype(np.uint8)
-
-# image_montage_np = np.empty([x,y,z])
-# image_montage_np = []
-
-# for p in paths:
-#     image_np = Image.open(p)
-#     # image_montage_np.append(image_np)
-#     # image_montage_np.append(color_line)
-#     image_montage_np = np.append(image_montage_np,image_np)
 
 
 montage = np.empty([x,1,z]).astype(np.uint8)
 
+labels = ["A","B","C"]
+font = cv2.FONT_HERSHEY_PLAIN 
+org = ( round(x*0.05), round(y*0.95))
+fontScale = 5
+color = (255, 255, 255)
+thickness = 5
 
-imgs = [skimage.io.imread(i) for i in paths]
-
+print(org)
+i = 0
 for p in paths:
     img = cv2.imread(p)
+    image = cv2.putText(img, labels[i], org, font, fontScale, color, thickness, cv2.LINE_AA)
     montage = np.concatenate([montage,color_line,img],axis = 1)
-    
-print(np.shape(montage))
+    i = i+1
 
+
+    
 
 cv2.imshow('image',montage)
 cv2.waitKey(0)
