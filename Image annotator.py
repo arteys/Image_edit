@@ -8,6 +8,7 @@ import tkinter.filedialog as fd
 import matplotlib
 import skimage.io
 import skimage.util
+import string
 
 
 
@@ -31,7 +32,7 @@ color_line = np.full_like(empty_line, [255,255,255]).astype(np.uint8)
 
 montage = np.empty([x,1,z]).astype(np.uint8)
 
-labels = ["A","B","C"]
+labels = list(string.ascii_uppercase)
 font = cv2.FONT_HERSHEY_PLAIN 
 org = ( round(x*0.05), round(y*0.95))
 fontScale = 5
